@@ -1,0 +1,66 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Etch-A-Sketch</title>
+  <style>
+    #container {
+        display: grid;
+        grid: repeat(16, 42px) / repeat(16, 42px);
+        justify-content: center;
+    }
+    .box {
+        border: 1px solid black;
+    }
+    .resetButton {
+        display: block;
+        padding: 15px 42px;
+        margin: 42px auto 42px auto;
+    }
+  </style>
+</head>
+<body>
+    <main>
+        <button class="resetButton" onClick="resetGrid()">Reset</button>
+        <div id="container"></div>
+    </main>
+    <script>
+            var htmlElements = "";
+            for (var i = 0; i < 256; i++) {
+                htmlElements += '<div class="box"></div>';
+            }
+
+            var container = document.querySelector('#container');
+            container.innerHTML = htmlElements;        
+
+            var box = Array.from(document.querySelectorAll('.box'));
+            box.forEach(box => box.addEventListener('mouseover',function (event) {
+                event.target.style.backgroundColor = 'pink';
+            }));
+
+            function resetGrid() { 
+                let size = window.prompt("Define grid size 1-100");
+                if(size>=100){
+                    size = 100;
+                }else if(size<=1){
+                    size = 1;
+                }
+                const numberBoxes = size * size;
+                box.forEach(box => box.style.backgroundColor = 'white');
+                const statement = "repeat(" + size + ", 42px) / repeat(" + size + ", 42px)";
+                container.style.grid = statement;
+                htmlElements = "";
+                for (var i = 0; i < numberBoxes; i++) {
+                    htmlElements += '<div class="box"></div>';
+                }
+                container.innerHTML = htmlElements;
+                box = Array.from(document.querySelectorAll('.box'));
+                box.forEach(box => box.addEventListener('mouseover',function (event) {
+                    event.target.style.backgroundColor = 'pink';
+                }));
+    
+            } 
+    </script>
+</body>
+</html>
